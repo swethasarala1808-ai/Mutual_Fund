@@ -1,0 +1,453 @@
+---
+title: Agent Dashboard
+---
+{%- raw -%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BizAxl — Agent Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#05133C;--navy2:#091a4a;--mint:#14F1B1;--blue:#114EFF;--bg:#030e1f;--card:#060f1e;--border:#0d2040;--text:#e2e8f0;--muted:#64748b;--success:#00C950;--red:#ef4444;--amber:#f59e0b;--grad:linear-gradient(135deg,#14F1B1,#114EFF);}
+*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);}
+.topbar{background:var(--navy);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;height:56px;gap:16px;}
+.topbar .brand{font-size:17px;font-weight:700;color:#fff;flex:1;}.brand span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.agent-badge{background:rgba(20,241,177,.1);border:1px solid rgba(20,241,177,.3);border-radius:8px;padding:4px 14px;font-size:12px;color:var(--mint);}
+.content{max-width:1200px;margin:0 auto;padding:28px 24px;}
+/* Login */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:40px;width:380px;}
+.login-card h2{font-size:20px;font-weight:600;margin-bottom:6px;}
+.login-card p{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.field-group{margin-bottom:14px;}.field-group label{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px;}
+.field-group input,.field-group select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-size:13px;font-family:inherit;}
+.field-group input:focus{outline:none;border-color:var(--mint);}
+.btn-primary{width:100%;background:var(--grad);border:none;border-radius:9px;padding:11px;font-size:14px;font-weight:600;color:#000;cursor:pointer;font-family:inherit;}
+.err{display:none;background:rgba(239,68,68,.1);border:1px solid var(--red);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:14px;}
+/* Dashboard */
+.dashboard{display:none;}.dashboard.show{display:block;}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:-16px;right:-16px;width:60px;height:60px;background:var(--mint);border-radius:50%;opacity:.05;}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px;}
+.stat-val{font-size:24px;font-weight:700;color:#fff;}.stat-val.green{color:var(--success);}.stat-val.amber{color:var(--amber);}.stat-val.red{color:var(--red);}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:3px;}
+/* Tabs */
+.tabs{display:flex;gap:4px;background:var(--navy);border-radius:10px;padding:4px;margin-bottom:24px;}
+.tab{padding:8px 16px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;color:var(--muted);border:none;background:none;font-family:inherit;transition:.15s;}
+.tab:hover{color:#fff;}.tab.active{background:rgba(20,241,177,.15);color:var(--mint);border:1px solid rgba(20,241,177,.3);}
+/* Panels */
+.panel{display:none;}.panel.active{display:block;}
+/* Table */
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.tbl-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);}
+.tbl-head h3{font-size:14px;font-weight:600;}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;}
+.tbl th{background:var(--navy);padding:10px 14px;text-align:left;font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;}
+.tbl td{padding:10px 14px;border-top:1px solid var(--border);vertical-align:middle;}
+.tbl tr:hover td{background:rgba(255,255,255,.02);}
+.badge{display:inline-block;font-size:10.5px;font-weight:500;padding:2px 8px;border-radius:20px;}
+.bg{background:rgba(0,201,80,.15);color:#00C950;}.ba{background:rgba(245,158,11,.15);color:#f59e0b;}.br{background:rgba(239,68,68,.15);color:#ef4444;}.bb{background:rgba(17,78,255,.2);color:#5b9cf6;}.bm{background:rgba(100,116,139,.15);color:var(--muted);}
+.btn-sm{background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--text);cursor:pointer;font-family:inherit;}
+.btn-sm:hover{border-color:var(--mint);color:var(--mint);}
+.add-btn{background:var(--grad);border:none;border-radius:7px;padding:6px 14px;font-size:12px;color:#000;font-weight:600;cursor:pointer;font-family:inherit;}
+.loading{padding:24px;text-align:center;color:var(--muted);font-size:13px;}
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;justify-content:center;align-items:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--navy);border:1px solid var(--border);border-radius:14px;width:520px;max-height:85vh;overflow-y:auto;}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--border);}
+.modal-head h3{font-size:14px;font-weight:600;}
+.modal-close{background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer;}
+.modal-body{padding:18px 22px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.form-row.full{grid-template-columns:1fr;}
+.modal-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;}
+.btn-cancel{background:transparent;border:1px solid var(--border);border-radius:7px;padding:7px 16px;color:var(--text);font-size:13px;cursor:pointer;font-family:inherit;}
+.btn-save{background:var(--grad);border:none;border-radius:7px;padding:7px 18px;color:#000;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+/* Risk score */
+.risk-result{display:none;background:var(--navy2);border-radius:8px;padding:12px;margin-top:10px;font-size:13px;}
+/* Pipeline */
+.pipeline{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:20px;}
+.pipe-col{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 10px;text-align:center;}
+.pipe-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px;}
+.pipe-val{font-size:22px;font-weight:700;color:#fff;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginWrap">
+<div class="login-wrap">
+  <div class="login-card">
+    <div style="margin-bottom:24px">
+      <div style="font-size:22px;font-weight:700;color:#fff">Biz<span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Axl</span></div>
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:3px">Agent Portal</div>
+    </div>
+    <h2>Agent Login</h2>
+    <p>Enter your EUIN to access your dashboard</p>
+    <div class="err" id="loginErr"></div>
+    <div class="field-group"><label>EUIN Number</label><input id="euinInput" placeholder="E123456" type="text"></div>
+    <div class="field-group"><label>Agent Name (verify)</label><input id="agentNameInput" placeholder="Your name" type="text"></div>
+    <button class="btn-primary" onclick="doLogin()">Login to Dashboard</button>
+    <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:14px">Demo: EUIN E123456 — Priya Sharma</div>
+  </div>
+</div>
+</div>
+
+<!-- AGENT DASHBOARD -->
+<div class="dashboard" id="agentDash">
+  <div class="topbar">
+    <div class="brand">Biz<span>Axl</span> MF</div>
+    <div class="agent-badge" id="agentBadge">Agent</div>
+    <div style="font-size:12px;color:var(--muted)" id="agentTerritory"></div>
+    <button style="background:transparent;border:1px solid var(--border);border-radius:7px;padding:5px 12px;color:var(--muted);font-size:12px;cursor:pointer" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="content">
+    <!-- Stat Cards -->
+    <div class="stat-grid" id="agentStatGrid"><div class="loading">Loading…</div></div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('myLeads',this)">🎯 My Leads</button>
+      <button class="tab" onclick="switchTab('myClients',this)">👤 My Clients</button>
+      <button class="tab" onclick="switchTab('mySips',this)">🔁 SIP Book</button>
+      <button class="tab" onclick="switchTab('myOrders',this)">📝 Orders</button>
+      <button class="tab" onclick="switchTab('meetings',this)">📅 Meetings</button>
+      <button class="tab" onclick="switchTab('kyc',this)">📂 KYC</button>
+      <button class="tab" onclick="switchTab('riskProfile',this)">🎲 Risk Profile</button>
+    </div>
+
+    <!-- MY LEADS -->
+    <div class="panel active" id="panel-myLeads">
+      <div class="table-wrap">
+        <div class="tbl-head">
+          <h3>My Leads Pipeline</h3>
+          <div style="display:flex;gap:8px">
+            <select id="leadStatusFilter" onchange="loadMyLeads()" style="background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:5px 10px;color:var(--text);font-size:12px;font-family:inherit;">
+              <option value="">All Status</option>
+              <option>New</option><option>Contacted</option><option>Qualified</option>
+              <option>KYC</option><option>Order Placed</option><option>Active</option><option>Lost</option>
+            </select>
+            <button class="add-btn" onclick="openModal('leadModal')">+ Add Lead</button>
+          </div>
+        </div>
+        <div class="pipeline" id="leadPipeline"></div>
+        <div id="leadsTableBody"><div class="loading">Loading leads…</div></div>
+      </div>
+    </div>
+
+    <!-- MY CLIENTS -->
+    <div class="panel" id="panel-myClients">
+      <div class="table-wrap">
+        <div class="tbl-head"><h3>My Clients</h3><button class="add-btn" onclick="openModal('clientModal')">+ Add Client</button></div>
+        <div id="clientsTableBody"><div class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- SIP BOOK -->
+    <div class="panel" id="panel-mySips">
+      <div class="table-wrap">
+        <div class="tbl-head"><h3>SIP Book</h3><button class="add-btn" onclick="openModal('sipModal')">+ New SIP</button></div>
+        <div id="sipsTableBody"><div class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="panel" id="panel-myOrders">
+      <div class="table-wrap">
+        <div class="tbl-head"><h3>Transaction Orders</h3><button class="add-btn" onclick="openModal('orderModal')">+ New Order</button></div>
+        <div id="ordersTableBody"><div class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- MEETINGS -->
+    <div class="panel" id="panel-meetings">
+      <div class="table-wrap">
+        <div class="tbl-head"><h3>Meetings</h3><button class="add-btn" onclick="openModal('meetingModal')">+ Log Meeting</button></div>
+        <div id="meetingsTableBody"><div class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- KYC -->
+    <div class="panel" id="panel-kyc">
+      <div class="table-wrap">
+        <div class="tbl-head"><h3>KYC Documents</h3><button class="add-btn" onclick="openModal('kycModal')">+ Add KYC</button></div>
+        <div id="kycTableBody"><div class="loading">Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- RISK PROFILE -->
+    <div class="panel" id="panel-riskProfile">
+      <div class="table-wrap">
+        <div class="tbl-head"><h3>Risk Profiles</h3><button class="add-btn" onclick="openModal('riskModal')">+ New Assessment</button></div>
+        <div id="riskTableBody"><div class="loading">Loading…</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="leadModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Add / Edit Lead</h3><button class="modal-close" onclick="closeModal('leadModal')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="lead_id">
+      <div class="form-row"><div class="field-group"><label>Full Name*</label><input id="lead_full_name" type="text"></div><div class="field-group"><label>Mobile*</label><input id="lead_mobile" type="text"></div></div>
+      <div class="form-row"><div class="field-group"><label>Email</label><input id="lead_email" type="email"></div><div class="field-group"><label>City</label><input id="lead_city" type="text"></div></div>
+      <div class="form-row"><div class="field-group"><label>Source</label><select id="lead_source"><option>Referral</option><option>WhatsApp</option><option>Event</option><option>Cold Call</option><option>LinkedIn</option><option>Walk-in</option></select></div><div class="field-group"><label>Status</label><select id="lead_status"><option>New</option><option>Contacted</option><option>Qualified</option><option>KYC</option><option>Order Placed</option><option>Active</option><option>Lost</option></select></div></div>
+      <div class="form-row"><div class="field-group"><label>Est. Investment (₹)</label><input id="lead_inv" type="number"></div><div class="field-group"><label>Follow-up Date</label><input id="lead_followup" type="date"></div></div>
+    </div>
+    <div class="modal-foot"><button class="btn-cancel" onclick="closeModal('leadModal')">Cancel</button><button class="btn-save" onclick="saveLead()">Save Lead</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="clientModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Add Client</h3><button class="modal-close" onclick="closeModal('clientModal')">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="client_id">
+      <div class="form-row"><div class="field-group"><label>Full Name*</label><input id="c_name" type="text"></div><div class="field-group"><label>PAN*</label><input id="c_pan" type="text"></div></div>
+      <div class="form-row"><div class="field-group"><label>Mobile*</label><input id="c_mobile" type="text"></div><div class="field-group"><label>DOB*</label><input id="c_dob" type="date"></div></div>
+      <div class="form-row"><div class="field-group"><label>Email</label><input id="c_email" type="email"></div><div class="field-group"><label>KYC Status</label><select id="c_kyc"><option>Pending</option><option>Verified</option></select></div></div>
+      <div class="form-row"><div class="field-group"><label>Bank Name</label><input id="c_bank" type="text"></div><div class="field-group"><label>IFSC</label><input id="c_ifsc" type="text"></div></div>
+      <div class="form-row full"><div class="field-group"><label>Address</label><input id="c_addr" type="text"></div></div>
+    </div>
+    <div class="modal-foot"><button class="btn-cancel" onclick="closeModal('clientModal')">Cancel</button><button class="btn-save" onclick="saveClient()">Save</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-head"><h3>New Transaction Order</h3><button class="modal-close" onclick="closeModal('orderModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row"><div class="field-group"><label>Type*</label><select id="o_type"><option>Purchase</option><option>SIP</option><option>Redemption</option><option>Switch</option></select></div><div class="field-group"><label>Client*</label><input id="o_client" type="text" placeholder="Client name"></div></div>
+      <div class="form-row"><div class="field-group"><label>Scheme*</label><input id="o_scheme" type="text"></div><div class="field-group"><label>Amount (₹)*</label><input id="o_amount" type="number"></div></div>
+      <div class="form-row"><div class="field-group"><label>Payment Mode</label><select id="o_mode"><option>Net Banking</option><option>NACH</option><option>UPI</option><option>Cheque</option></select></div><div class="field-group"><label>ARN</label><input id="o_arn" type="text" value="ARN-98765"></div></div>
+      <div id="payLinkResult" style="display:none;margin-top:10px;background:rgba(20,241,177,.08);border-radius:8px;padding:10px;font-size:12px;color:var(--mint)"></div>
+    </div>
+    <div class="modal-foot"><button class="btn-cancel" onclick="closeModal('orderModal')">Cancel</button><button class="btn-save" onclick="saveOrder()">Save & Get Pay Link</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="sipModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Add SIP</h3><button class="modal-close" onclick="closeModal('sipModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row"><div class="field-group"><label>Client*</label><input id="s_client" type="text"></div><div class="field-group"><label>Scheme*</label><input id="s_scheme" type="text"></div></div>
+      <div class="form-row"><div class="field-group"><label>Amount (₹)*</label><input id="s_amount" type="number"></div><div class="field-group"><label>Frequency</label><select id="s_freq"><option>Monthly</option><option>Quarterly</option></select></div></div>
+      <div class="form-row"><div class="field-group"><label>SIP Date (1-28)</label><input id="s_date" type="number" min="1" max="28"></div><div class="field-group"><label>Start Date*</label><input id="s_start" type="date"></div></div>
+    </div>
+    <div class="modal-foot"><button class="btn-cancel" onclick="closeModal('sipModal')">Cancel</button><button class="btn-save" onclick="saveSip()">Save SIP</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="meetingModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Log Meeting</h3><button class="modal-close" onclick="closeModal('meetingModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row"><div class="field-group"><label>With</label><select id="m_with"><option>Lead</option><option>Client</option></select></div><div class="field-group"><label>Name</label><input id="m_ref" type="text" placeholder="Lead or client name"></div></div>
+      <div class="form-row"><div class="field-group"><label>Date*</label><input id="m_date" type="date"></div><div class="field-group"><label>Mode</label><select id="m_mode"><option>Phone Call</option><option>Video Call</option><option>In-Person</option><option>WhatsApp</option></select></div></div>
+      <div class="form-row"><div class="field-group"><label>Outcome</label><select id="m_outcome"><option>Interested</option><option>Follow-up Required</option><option>Not Interested</option><option>KYC Started</option><option>Order Placed</option></select></div><div class="field-group"><label>Follow-up</label><input id="m_followup" type="date"></div></div>
+      <div class="form-row full"><div class="field-group"><label>Notes</label><textarea id="m_notes" rows="3" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:8px;color:var(--text);font-family:inherit;font-size:13px"></textarea></div></div>
+    </div>
+    <div class="modal-foot"><button class="btn-cancel" onclick="closeModal('meetingModal')">Cancel</button><button class="btn-save" onclick="saveMeeting()">Save</button></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="kycModal">
+  <div class="modal">
+    <div class="modal-head"><h3>KYC Document</h3><button class="modal-close" onclick="closeModal('kycModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row"><div class="field-group"><label>Client*</label><input id="k_client" type="text"></div><div class="field-group"><label>PAN*</label><input id="k_pan" type="text"></div></div>
+      <div class="form-row"><div class="field-group"><label>Aadhaar Last 4</label><input id="k_aadhaar" type="text" maxlength="4"></div><div class="field-group"><label>KYC Status</label><select id="k_status"><option>Pending</option><option>Submitted</option><option>Verified</option></select></div></div>
+      <div id="kycVerifyDiv" style="display:none;margin-top:8px;background:rgba(0,201,80,.1);border-radius:8px;padding:10px;font-size:13px;color:var(--success)"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeModal('kycModal')">Cancel</button>
+      <button class="btn-cancel" style="border-color:var(--mint);color:var(--mint)" onclick="verifyKYC()">🔍 Mock Verify</button>
+      <button class="btn-save" onclick="saveKYC()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="riskModal">
+  <div class="modal">
+    <div class="modal-head"><h3>Risk Profile Assessment</h3><button class="modal-close" onclick="closeModal('riskModal')">✕</button></div>
+    <div class="modal-body">
+      <div class="form-row"><div class="field-group"><label>Client*</label><input id="r_client" type="text"></div><div class="field-group"><label>Date*</label><input id="r_date" type="date"></div></div>
+      <div class="form-row"><div class="field-group"><label>Annual Income</label><select id="r_income"><option>Below 5L</option><option>5-10L</option><option>10-25L</option><option>25-50L</option><option>50L+</option></select></div><div class="field-group"><label>Investment Horizon</label><select id="r_horizon"><option>Less than 1Y</option><option>1-3Y</option><option>3-5Y</option><option>5Y+</option></select></div></div>
+      <div class="risk-result" id="riskResultDiv"></div>
+    </div>
+    <div class="modal-foot"><button class="btn-cancel" onclick="closeModal('riskModal')">Cancel</button><button class="btn-save" onclick="saveRisk()">Calculate & Save</button></div>
+  </div>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded',function(){if(window.frappe){if(frappe.msgprint)frappe.msgprint=function(){};if(frappe.throw)frappe.throw=function(){};}});
+window.addEventListener('unhandledrejection',function(e){e.preventDefault();});
+
+let currentAgent = null;
+let currentEuin = null;
+
+function getCsrf(){var v=document.cookie.match('(^|;)\\s*csrf_token\\s*=\\s*([^;]+)');return v?v.pop():'';}
+async function post(method,params){
+  var fd=new URLSearchParams();
+  Object.entries(params||{}).forEach(([k,v])=>fd.append(k,typeof v==='object'?JSON.stringify(v):String(v)));
+  var r=await fetch('/api/method/'+method,{method:'POST',credentials:'same-origin',
+    headers:{'Content-Type':'application/x-www-form-urlencoded','X-Frappe-CSRF-Token':getCsrf()},body:fd});
+  var d=await r.json();return d.message;
+}
+async function get(method,params){
+  var q=new URLSearchParams(params||{}).toString();
+  var r=await fetch('/api/method/'+method+(q?'?'+q:''),{credentials:'same-origin'});
+  var d=await r.json();return d.message;
+}
+
+function fmt(n){return n?('₹'+(+n).toLocaleString('en-IN',{maximumFractionDigits:0})):'—';}
+function badge(t,c){return`<span class="badge ${c||'bm'}">${t||'—'}</span>`;}
+function sb(s){const m={Active:'bg',Verified:'bg',Confirmed:'bg',New:'bb',Contacted:'bb',Submitted:'bb',Qualified:'bb',Pending:'ba',KYC:'ba','Order Placed':'ba',Registered:'bg',Interested:'bg','Not Interested':'br',Lost:'br',Failed:'br',Rejected:'br'};return badge(s,m[s]||'bm');}
+
+async function doLogin(){
+  const euin=document.getElementById('euinInput').value.trim().toUpperCase();
+  const name=document.getElementById('agentNameInput').value.trim();
+  if(!euin){document.getElementById('loginErr').textContent='Enter EUIN';document.getElementById('loginErr').style.display='block';return;}
+  const agents=await get('mutual_fund_app.api.get_agents');
+  const agent=(agents||[]).find(a=>a.euin===euin);
+  if(!agent){document.getElementById('loginErr').textContent='EUIN not found. Demo: E123456';document.getElementById('loginErr').style.display='block';return;}
+  currentAgent=agent.name; currentEuin=agent.euin;
+  document.getElementById('loginWrap').style.display='none';
+  document.getElementById('agentDash').classList.add('show');
+  document.getElementById('agentBadge').textContent=agent.agent_name;
+  document.getElementById('agentTerritory').textContent='📍 '+( agent.territory||'');
+  loadAgentStats();
+  loadMyLeads();
+}
+function logout(){currentAgent=null;currentEuin=null;document.getElementById('loginWrap').style.display='';document.getElementById('agentDash').classList.remove('show');}
+
+async function loadAgentStats(){
+  if(!currentEuin)return;
+  const d=await get('mutual_fund_app.api.get_agent_dashboard',{agent_euin:currentEuin});
+  if(!d||d.error){document.getElementById('agentStatGrid').innerHTML='<div class="loading">'+( d&&d.error||'No data')+' </div>';return;}
+  const s=d.stats||{};
+  document.getElementById('agentStatGrid').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Total AUM</div><div class="stat-val small" style="font-size:18px">${fmt(s.total_aum)}</div><div class="stat-sub">My clients</div></div>
+    <div class="stat-card"><div class="stat-label">My Leads</div><div class="stat-val">${s.my_leads||0}</div><div class="stat-sub">In pipeline</div></div>
+    <div class="stat-card"><div class="stat-label">My Clients</div><div class="stat-val green">${s.my_clients||0}</div><div class="stat-sub">Active investors</div></div>
+    <div class="stat-card"><div class="stat-label">Active SIPs</div><div class="stat-val green">${s.active_sips||0}</div><div class="stat-sub">Running mandates</div></div>
+    <div class="stat-card"><div class="stat-label">Today Follow-ups</div><div class="stat-val amber">${s.today_followups||0}</div><div class="stat-sub">Action needed</div></div>
+    <div class="stat-card"><div class="stat-label">SIPs Due (3d)</div><div class="stat-val amber">${s.due_sips||0}</div><div class="stat-sub">Send reminders</div></div>
+    <div class="stat-card"><div class="stat-label">Pending KYC</div><div class="stat-val red">${s.pending_kyc||0}</div><div class="stat-sub">Needs action</div></div>
+    <div class="stat-card"><div class="stat-label">AUM Target</div><div class="stat-val" style="font-size:18px">${fmt(d.agent&&d.agent.aum_target)}</div><div class="stat-sub">My target</div></div>
+  `;
+}
+
+function switchTab(id,el){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  const m={myLeads:loadMyLeads,myClients:loadMyClients,mySips:loadMySips,myOrders:loadMyOrders,meetings:loadMeetings,kyc:loadKYC,riskProfile:loadRiskProfiles};
+  if(m[id])m[id]();
+}
+
+// LEADS
+async function loadMyLeads(){
+  const status=document.getElementById('leadStatusFilter').value;
+  const params={assigned_agent:currentAgent};
+  if(status)params.status=status;
+  const data=await get('mutual_fund_app.api.get_leads',params);
+  // Pipeline counts
+  const statuses=['New','Contacted','Qualified','KYC','Order Placed','Active','Lost'];
+  const counts={};(data||[]).forEach(l=>{counts[l.status]=(counts[l.status]||0)+1;});
+  document.getElementById('leadPipeline').innerHTML=statuses.map(s=>`<div class="pipe-col"><div class="pipe-label">${s}</div><div class="pipe-val">${counts[s]||0}</div></div>`).join('');
+  if(!data||!data.length){document.getElementById('leadsTableBody').innerHTML='<div class="loading">No leads yet. Add your first lead!</div>';return;}
+  let h=`<table class="tbl"><thead><tr><th>Name</th><th>Mobile</th><th>Source</th><th>Status</th><th>City</th><th>Est. Investment</th><th>Follow-up</th><th>Actions</th></tr></thead><tbody>`;
+  data.forEach(l=>{h+=`<tr><td><strong>${l.full_name}</strong></td><td>${l.mobile||'—'}</td><td>${l.source||'—'}</td><td>${sb(l.status)}</td><td>${l.city||'—'}</td><td>${fmt(l.estimated_investment)}</td><td style="color:var(--amber)">${l.follow_up_date||'—'}</td><td><button class="btn-sm" onclick='editLead(${JSON.stringify(l).replace(/"/g,"&quot;")})'>Edit</button> <button class="btn-sm" onclick="sendWA('${l.mobile}','${l.full_name}')">📱 WA</button></td></tr>`;});
+  document.getElementById('leadsTableBody').innerHTML=h+'</tbody></table>';
+}
+function editLead(l){document.getElementById('lead_id').value=l.name||'';document.getElementById('lead_full_name').value=l.full_name||'';document.getElementById('lead_mobile').value=l.mobile||'';document.getElementById('lead_email').value=l.email||'';document.getElementById('lead_city').value=l.city||'';document.getElementById('lead_source').value=l.source||'Referral';document.getElementById('lead_status').value=l.status||'New';document.getElementById('lead_inv').value=l.estimated_investment||'';document.getElementById('lead_followup').value=l.follow_up_date||'';openModal('leadModal');}
+async function saveLead(){
+  const n=document.getElementById('lead_id').value;
+  const p={full_name:document.getElementById('lead_full_name').value,mobile:document.getElementById('lead_mobile').value,email:document.getElementById('lead_email').value,city:document.getElementById('lead_city').value,source:document.getElementById('lead_source').value,status:document.getElementById('lead_status').value,estimated_investment:document.getElementById('lead_inv').value,follow_up_date:document.getElementById('lead_followup').value,assigned_agent:currentAgent};
+  if(n)p.name=n;
+  await post('mutual_fund_app.api.save_lead',p);closeModal('leadModal');loadMyLeads();loadAgentStats();
+}
+async function sendWA(mobile,name){await post('mutual_fund_app.api.send_whatsapp',{mobile,message_type:'lead_followup',data:JSON.stringify({name,agent_name:'BizAxl Agent'})});alert('WhatsApp reminder logged!');}
+
+// CLIENTS
+async function loadMyClients(){
+  const data=await get('mutual_fund_app.api.get_clients',{agent:currentAgent});
+  if(!data||!data.length){document.getElementById('clientsTableBody').innerHTML='<div class="loading">No clients yet.</div>';return;}
+  let h=`<table class="tbl"><thead><tr><th>Name</th><th>Mobile</th><th>PAN</th><th>KYC Status</th><th>Total AUM</th><th>Actions</th></tr></thead><tbody>`;
+  data.forEach(c=>{h+=`<tr><td><strong>${c.full_name}</strong></td><td>${c.mobile||'—'}</td><td style="font-family:monospace;font-size:11px">${c.pan||'—'}</td><td>${sb(c.kyc_status)}</td><td>${fmt(c.total_aum)}</td><td><button class="btn-sm" onclick="editClientModal('${c.name}')">Edit</button> ${c.kyc_status!=='Verified'?`<button class="btn-sm" onclick="quickVerify('${c.name}')">Verify KYC</button>`:''}</td></tr>`;});
+  document.getElementById('clientsTableBody').innerHTML=h+'</tbody></table>';
+}
+async function editClientModal(name){const d=await get('mutual_fund_app.api.get_client_detail',{client_name:name});if(!d)return;document.getElementById('client_id').value=d.name||'';document.getElementById('c_name').value=d.full_name||'';document.getElementById('c_pan').value=d.pan||'';document.getElementById('c_mobile').value=d.mobile||'';document.getElementById('c_dob').value=d.date_of_birth||'';document.getElementById('c_email').value=d.email||'';document.getElementById('c_kyc').value=d.kyc_status||'Pending';document.getElementById('c_bank').value=d.bank_name||'';document.getElementById('c_ifsc').value=d.ifsc||'';openModal('clientModal');}
+async function saveClient(){const n=document.getElementById('client_id').value;const p={full_name:document.getElementById('c_name').value,pan:document.getElementById('c_pan').value,mobile:document.getElementById('c_mobile').value,date_of_birth:document.getElementById('c_dob').value,email:document.getElementById('c_email').value,kyc_status:document.getElementById('c_kyc').value,bank_name:document.getElementById('c_bank').value,ifsc:document.getElementById('c_ifsc').value,address:document.getElementById('c_addr').value,agent:currentAgent};if(n)p.name=n;await post('mutual_fund_app.api.save_client',p);closeModal('clientModal');loadMyClients();}
+async function quickVerify(client){const r=await post('mutual_fund_app.api.verify_kyc_mock',{client_name:client});alert('KYC Verified! Ref: '+r.reference);loadMyClients();loadAgentStats();}
+
+// SIPS
+async function loadMySips(){
+  const data=await get('mutual_fund_app.api.get_sips',{});
+  // filter by agent's clients
+  if(!data||!data.length){document.getElementById('sipsTableBody').innerHTML='<div class="loading">No SIPs yet.</div>';return;}
+  let h=`<table class="tbl"><thead><tr><th>Client</th><th>Scheme</th><th>Amount</th><th>Frequency</th><th>Next Date</th><th>Mandate</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+  data.forEach(s=>{const due=s.next_sip_date&&new Date(s.next_sip_date)<=new Date(Date.now()+3*864e5);h+=`<tr><td>${s.client||'—'}</td><td>${s.scheme||'—'}</td><td><strong>${fmt(s.sip_amount)}</strong></td><td>${s.frequency||'—'}</td><td style="color:${due?'var(--amber)':'var(--text)'}">${s.next_sip_date||'—'}${due?' ⚠️':''}</td><td>${sb(s.mandate_status)}</td><td>${sb(s.status)}</td><td>${due?`<button class="btn-sm" onclick="sipReminder('${s.client}','${s.sip_amount}','${s.scheme}','${s.next_sip_date}')">📱 Remind</button>`:''}</td></tr>`;});
+  document.getElementById('sipsTableBody').innerHTML=h+'</tbody></table>';
+}
+async function sipReminder(client,amount,scheme,date){const c=await get('mutual_fund_app.api.get_client_detail',{client_name:client});if(c)await post('mutual_fund_app.api.send_whatsapp',{mobile:c.mobile,message_type:'sip_reminder',data:JSON.stringify({amount,scheme,date,name:c.full_name})});alert('SIP reminder WhatsApp logged!');}
+async function saveSip(){const p={client:document.getElementById('s_client').value,scheme:document.getElementById('s_scheme').value,sip_amount:document.getElementById('s_amount').value,frequency:document.getElementById('s_freq').value,sip_date:document.getElementById('s_date').value,start_date:document.getElementById('s_start').value,agent:currentAgent,status:'Active'};await post('mutual_fund_app.api.save_sip',p);closeModal('sipModal');loadMySips();}
+
+// ORDERS
+async function loadMyOrders(){
+  const data=await get('mutual_fund_app.api.get_transaction_orders',{agent:currentAgent});
+  if(!data||!data.length){document.getElementById('ordersTableBody').innerHTML='<div class="loading">No orders yet.</div>';return;}
+  let h=`<table class="tbl"><thead><tr><th>Order ID</th><th>Type</th><th>Client</th><th>Scheme</th><th>Amount</th><th>Status</th><th>Payment</th><th>Date</th><th>Actions</th></tr></thead><tbody>`;
+  data.forEach(o=>{h+=`<tr><td style="font-family:monospace;font-size:11px">${o.name}</td><td>${sb(o.transaction_type)}</td><td>${o.client||'—'}</td><td>${o.scheme||'—'}</td><td>${fmt(o.amount)}</td><td>${sb(o.status)}</td><td>${sb(o.payment_status)}</td><td>${o.order_date||'—'}</td><td><button class="btn-sm" onclick="genPayLink('${o.name}','${o.amount}')">💳 Pay Link</button></td></tr>`;});
+  document.getElementById('ordersTableBody').innerHTML=h+'</tbody></table>';
+}
+async function saveOrder(){const euin=currentEuin||'';const p={transaction_type:document.getElementById('o_type').value,client:document.getElementById('o_client').value,scheme:document.getElementById('o_scheme').value,amount:document.getElementById('o_amount').value,payment_mode:document.getElementById('o_mode').value,arn:document.getElementById('o_arn').value,euin,agent:currentAgent,order_date:new Date().toISOString().slice(0,10),status:'Submitted'};const n=await post('mutual_fund_app.api.save_transaction_order',p);if(n){const link=await post('mutual_fund_app.api.create_payment_link',{order_name:n,amount:p.amount});document.getElementById('payLinkResult').style.display='block';document.getElementById('payLinkResult').textContent='✅ Order saved! Pay link: '+link;}loadMyOrders();}
+async function genPayLink(name,amount){const link=await post('mutual_fund_app.api.create_payment_link',{order_name:name,amount});alert('Payment link: '+link);}
+
+// MEETINGS
+async function loadMeetings(){
+  const data=await get('mutual_fund_app.api.get_meetings',{agent:currentAgent});
+  if(!data||!data.length){document.getElementById('meetingsTableBody').innerHTML='<div class="loading">No meetings logged yet.</div>';return;}
+  let h=`<table class="tbl"><thead><tr><th>Date</th><th>With</th><th>Mode</th><th>Outcome</th><th>Follow-up</th></tr></thead><tbody>`;
+  data.forEach(m=>{h+=`<tr><td>${m.meeting_date||'—'}</td><td>${m.client||m.lead||'—'} (${m.meeting_with})</td><td>${m.mode||'—'}</td><td>${sb(m.outcome)}</td><td>${m.follow_up_date||'—'}</td></tr>`;});
+  document.getElementById('meetingsTableBody').innerHTML=h+'</tbody></table>';
+}
+async function saveMeeting(){const w=document.getElementById('m_with').value;const p={meeting_with:w,agent:currentAgent,meeting_date:document.getElementById('m_date').value,mode:document.getElementById('m_mode').value,outcome:document.getElementById('m_outcome').value,notes:document.getElementById('m_notes').value,follow_up_date:document.getElementById('m_followup').value};if(w==='Lead')p.lead=document.getElementById('m_ref').value;else p.client=document.getElementById('m_ref').value;await post('mutual_fund_app.api.save_meeting',p);closeModal('meetingModal');loadMeetings();}
+
+// KYC
+async function loadKYC(){
+  const clients=await get('mutual_fund_app.api.get_clients',{agent:currentAgent});
+  if(!clients||!clients.length){document.getElementById('kycTableBody').innerHTML='<div class="loading">No clients yet.</div>';return;}
+  let h=`<table class="tbl"><thead><tr><th>Client</th><th>Mobile</th><th>KYC Status</th><th>Action</th></tr></thead><tbody>`;
+  clients.forEach(c=>{h+=`<tr><td><strong>${c.full_name}</strong></td><td>${c.mobile||'—'}</td><td>${sb(c.kyc_status)}</td><td>${c.kyc_status!=='Verified'?`<button class="btn-sm" onclick="quickVerify('${c.name}')">Verify KYC</button>`:'✅ Done'}</td></tr>`;});
+  document.getElementById('kycTableBody').innerHTML=h+'</tbody></table>';
+}
+async function verifyKYC(){const c=document.getElementById('k_client').value;if(!c){alert('Enter client first');return;}const r=await post('mutual_fund_app.api.verify_kyc_mock',{client_name:c});document.getElementById('kycVerifyDiv').style.display='block';document.getElementById('kycVerifyDiv').textContent='✅ Verified! Ref: '+r.reference;}
+async function saveKYC(){await post('mutual_fund_app.api.save_kyc_doc',{client:document.getElementById('k_client').value,pan_number:document.getElementById('k_pan').value,aadhaar_last4:document.getElementById('k_aadhaar').value,kyc_status:document.getElementById('k_status').value});closeModal('kycModal');loadKYC();}
+
+// RISK PROFILES
+async function loadRiskProfiles(){
+  const data=await get('mutual_fund_app.api.get_recommendations',{agent:currentAgent});
+  // show risk profile list from clients
+  const clients=await get('mutual_fund_app.api.get_clients',{agent:currentAgent});
+  if(!clients||!clients.length){document.getElementById('riskTableBody').innerHTML='<div class="loading">No clients yet.</div>';return;}
+  let h=`<table class="tbl"><thead><tr><th>Client</th><th>Action</th></tr></thead><tbody>`;
+  clients.forEach(c=>{h+=`<tr><td><strong>${c.full_name}</strong></td><td><button class="btn-sm" onclick="startRiskFor('${c.name}')">Assess Risk Profile</button></td></tr>`;});
+  document.getElementById('riskTableBody').innerHTML=h+'</tbody></table>';
+}
+function startRiskFor(client){document.getElementById('r_client').value=client;document.getElementById('r_date').value=new Date().toISOString().slice(0,10);openModal('riskModal');}
+async function saveRisk(){const p={client:document.getElementById('r_client').value,assessment_date:document.getElementById('r_date').value,annual_income:document.getElementById('r_income').value,investment_horizon:document.getElementById('r_horizon').value,agent:currentAgent};const r=await post('mutual_fund_app.api.save_risk_profile',p);document.getElementById('riskResultDiv').style.display='block';document.getElementById('riskResultDiv').innerHTML=`✅ Profile: <strong>${r.risk_profile_type}</strong> | Score: ${r.risk_score}`;setTimeout(()=>{closeModal('riskModal');loadRiskProfiles();},1500);}
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
+</script>
+{%- endraw -%}

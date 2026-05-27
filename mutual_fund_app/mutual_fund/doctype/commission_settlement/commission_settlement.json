@@ -1,0 +1,94 @@
+{
+  "name": "Commission Settlement",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "period",
+      "fieldtype": "Data",
+      "label": "Period",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "Month-year e.g. Apr-2025"
+    },
+    {
+      "fieldname": "amc",
+      "fieldtype": "Data",
+      "label": "AMC",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "distributor",
+      "fieldtype": "Data",
+      "label": "Distributor",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "sb_amounts",
+      "fieldtype": "Section Break",
+      "label": "Amounts"
+    },
+    {
+      "fieldname": "calculated_amount",
+      "fieldtype": "Currency",
+      "label": "Calculated Amount",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "System-calculated trail AUM \u00d7 trail% / 12"
+    },
+    {
+      "fieldname": "received_amount",
+      "fieldtype": "Currency",
+      "label": "Received Amount",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Actual amount credited by AMC"
+    },
+    {
+      "fieldname": "variance",
+      "fieldtype": "Currency",
+      "label": "Variance",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Auto-calculated: received \u2013 calculated"
+    },
+    {
+      "fieldname": "tds_deducted",
+      "fieldtype": "Currency",
+      "label": "TDS Deducted",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "TDS amount withheld by AMC"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Pending\nReceived\nReconciled\nDisputed",
+      "default": "Pending"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "CSET-.YYYY.-.#####"
+}

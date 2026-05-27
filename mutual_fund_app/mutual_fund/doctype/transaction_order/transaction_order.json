@@ -1,0 +1,188 @@
+{
+  "name": "Transaction Order",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "transaction_type",
+      "fieldtype": "Select",
+      "label": "Transaction Type",
+      "reqd": 1,
+      "in_list_view": 1,
+      "options": "Purchase\nSIP\nRedemption\nSwitch\nSTP\nSWP\nDividend Payout Change"
+    },
+    {
+      "fieldname": "client",
+      "fieldtype": "Data",
+      "label": "Client",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "folio",
+      "fieldtype": "Data",
+      "label": "Folio",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Existing folio; blank = new folio"
+    },
+    {
+      "fieldname": "scheme",
+      "fieldtype": "Data",
+      "label": "Scheme",
+      "reqd": 1,
+      "in_list_view": 0,
+      "description": "Target scheme"
+    },
+    {
+      "fieldname": "target_scheme",
+      "fieldtype": "Data",
+      "label": "Target Scheme",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "For Switch: destination scheme"
+    },
+    {
+      "fieldname": "sb_order_details",
+      "fieldtype": "Section Break",
+      "label": "Order Details"
+    },
+    {
+      "fieldname": "amount",
+      "fieldtype": "Currency",
+      "label": "Amount",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Amount in INR for amount-based orders"
+    },
+    {
+      "fieldname": "units",
+      "fieldtype": "Float",
+      "label": "Units",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Units for unit-based redemptions"
+    },
+    {
+      "fieldname": "payment_mode",
+      "fieldtype": "Select",
+      "label": "Payment Mode",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "NACH\nNet Banking\nUPI\nCheque\nRTGS"
+    },
+    {
+      "fieldname": "sb_compliance",
+      "fieldtype": "Section Break",
+      "label": "Compliance"
+    },
+    {
+      "fieldname": "arn",
+      "fieldtype": "Data",
+      "label": "ARN",
+      "reqd": 1,
+      "in_list_view": 0,
+      "description": "Distributor ARN mandatory on all orders"
+    },
+    {
+      "fieldname": "euin",
+      "fieldtype": "Data",
+      "label": "EUIN",
+      "reqd": 1,
+      "in_list_view": 0,
+      "description": "Agent EUIN SEBI mandatory"
+    },
+    {
+      "fieldname": "agent",
+      "fieldtype": "Data",
+      "label": "Agent",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_dates_&_allotment",
+      "fieldtype": "Section Break",
+      "label": "Dates & Allotment"
+    },
+    {
+      "fieldname": "order_date",
+      "fieldtype": "Date",
+      "label": "Order Date",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "nav_date",
+      "fieldtype": "Date",
+      "label": "NAV Date",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Applicable NAV date set post-confirmation"
+    },
+    {
+      "fieldname": "allotted_units",
+      "fieldtype": "Float",
+      "label": "Allotted Units",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Units allotted after RTA confirmation"
+    },
+    {
+      "fieldname": "allotted_nav",
+      "fieldtype": "Float",
+      "label": "Allotted NAV",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "NAV at allotment"
+    },
+    {
+      "fieldname": "sb_status",
+      "fieldtype": "Section Break",
+      "label": "Status"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Draft\nSubmitted\nRouted\nConfirmed\nRejected\nCancelled",
+      "default": "Draft"
+    },
+    {
+      "fieldname": "payment_link",
+      "fieldtype": "Data",
+      "label": "Payment Link",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "payment_status",
+      "fieldtype": "Select",
+      "label": "Payment Status",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Pending\nPaid\nFailed",
+      "default": "Pending"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "TXNO-.YYYY.-.#####"
+}

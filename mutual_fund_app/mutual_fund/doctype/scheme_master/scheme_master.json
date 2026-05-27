@@ -1,0 +1,173 @@
+{
+  "name": "Scheme Master",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "scheme_name",
+      "fieldtype": "Data",
+      "label": "Scheme Name",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "Full scheme name e.g. HDFC Mid-Cap Opportunities Fund \u2013 Growth"
+    },
+    {
+      "fieldname": "amc",
+      "fieldtype": "Data",
+      "label": "AMC",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "Parent AMC"
+    },
+    {
+      "fieldname": "isin",
+      "fieldtype": "Data",
+      "label": "ISIN",
+      "reqd": 1,
+      "in_list_view": 0,
+      "description": "ISIN code e.g. INF179K01BB2"
+    },
+    {
+      "fieldname": "scheme_code",
+      "fieldtype": "Data",
+      "label": "Scheme Code",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "AMC internal scheme code used in AMFI NAV file"
+    },
+    {
+      "fieldname": "sb_classification",
+      "fieldtype": "Section Break",
+      "label": "Classification"
+    },
+    {
+      "fieldname": "category",
+      "fieldtype": "Select",
+      "label": "Category",
+      "reqd": 1,
+      "in_list_view": 1,
+      "options": "Equity\nDebt\nHybrid\nLiquid\nELSS\nIndex\nFoF"
+    },
+    {
+      "fieldname": "sub_category",
+      "fieldtype": "Data",
+      "label": "Sub Category",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "SEBI sub-category e.g. Large Cap, Mid Cap"
+    },
+    {
+      "fieldname": "plan_type",
+      "fieldtype": "Select",
+      "label": "Plan Type",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Regular\nDirect"
+    },
+    {
+      "fieldname": "option_type",
+      "fieldtype": "Select",
+      "label": "Option Type",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Growth\nDividend\nIDCW"
+    },
+    {
+      "fieldname": "sb_financial_details",
+      "fieldtype": "Section Break",
+      "label": "Financial Details"
+    },
+    {
+      "fieldname": "benchmark",
+      "fieldtype": "Data",
+      "label": "Benchmark",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Benchmark index e.g. Nifty 50 TRI"
+    },
+    {
+      "fieldname": "expense_ratio",
+      "fieldtype": "Float",
+      "label": "Expense Ratio %",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "TER as % per annum"
+    },
+    {
+      "fieldname": "exit_load_rules",
+      "fieldtype": "Text",
+      "label": "Exit Load Rules",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "e.g. 1% if redeemed within 1 year"
+    },
+    {
+      "fieldname": "min_investment",
+      "fieldtype": "Currency",
+      "label": "Min Lump Sum",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Minimum lump sum amount INR"
+    },
+    {
+      "fieldname": "min_sip_amount",
+      "fieldtype": "Currency",
+      "label": "Min SIP Amount",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Minimum SIP instalment INR"
+    },
+    {
+      "fieldname": "risk_level",
+      "fieldtype": "Select",
+      "label": "Risk Level",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Low\nModerate\nHigh\nVery High",
+      "description": "Riskometer level"
+    },
+    {
+      "fieldname": "fund_manager",
+      "fieldtype": "Data",
+      "label": "Fund Manager",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "aum_cr",
+      "fieldtype": "Currency",
+      "label": "AUM (Cr)",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Latest reported AUM in crores"
+    },
+    {
+      "fieldname": "is_active",
+      "fieldtype": "Check",
+      "label": "Is Active",
+      "reqd": 0,
+      "in_list_view": 0,
+      "default": "1",
+      "description": "Whether scheme is open for fresh investment"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "SCHEME-.YYYY.-.#####"
+}

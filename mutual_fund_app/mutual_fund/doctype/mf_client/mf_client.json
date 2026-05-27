@@ -1,0 +1,175 @@
+{
+  "name": "MF Client",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "full_name",
+      "fieldtype": "Data",
+      "label": "Full Name",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "Legal name as per PAN"
+    },
+    {
+      "fieldname": "pan",
+      "fieldtype": "Data",
+      "label": "PAN",
+      "reqd": 1,
+      "in_list_view": 0,
+      "description": "PAN unique; primary key across systems"
+    },
+    {
+      "fieldname": "date_of_birth",
+      "fieldtype": "Date",
+      "label": "Date of Birth",
+      "reqd": 1,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "mobile",
+      "fieldtype": "Data",
+      "label": "Mobile",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "Registered mobile for OTP and alerts"
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_address",
+      "fieldtype": "Section Break",
+      "label": "Address"
+    },
+    {
+      "fieldname": "address",
+      "fieldtype": "Text",
+      "label": "Address",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Residential address"
+    },
+    {
+      "fieldname": "pincode",
+      "fieldtype": "Data",
+      "label": "Pincode",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_bank_details",
+      "fieldtype": "Section Break",
+      "label": "Bank Details"
+    },
+    {
+      "fieldname": "bank_name",
+      "fieldtype": "Data",
+      "label": "Bank Name",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Bank name for redemption credits"
+    },
+    {
+      "fieldname": "account_number",
+      "fieldtype": "Password",
+      "label": "Account Number",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Bank account encrypted"
+    },
+    {
+      "fieldname": "ifsc",
+      "fieldtype": "Data",
+      "label": "IFSC",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_nominee",
+      "fieldtype": "Section Break",
+      "label": "Nominee"
+    },
+    {
+      "fieldname": "nominee_name",
+      "fieldtype": "Data",
+      "label": "Nominee Name",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "nominee_relation",
+      "fieldtype": "Data",
+      "label": "Nominee Relation",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_status_&_assignment",
+      "fieldtype": "Section Break",
+      "label": "Status & Assignment"
+    },
+    {
+      "fieldname": "kyc_status",
+      "fieldtype": "Select",
+      "label": "KYC Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Pending\nVerified\nRejected",
+      "default": "Pending"
+    },
+    {
+      "fieldname": "agent",
+      "fieldtype": "Data",
+      "label": "Agent",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Assigned agent"
+    },
+    {
+      "fieldname": "distributor",
+      "fieldtype": "Data",
+      "label": "Distributor",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "total_aum",
+      "fieldtype": "Currency",
+      "label": "Total AUM",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Auto-calculated current AUM across all folios"
+    },
+    {
+      "fieldname": "portal_password_hash",
+      "fieldtype": "Password",
+      "label": "Portal OTP/Password",
+      "reqd": 0,
+      "in_list_view": 0
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "MFCL-.YYYY.-.#####"
+}

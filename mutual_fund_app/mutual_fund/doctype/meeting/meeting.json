@@ -1,0 +1,100 @@
+{
+  "name": "Meeting",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "meeting_with",
+      "fieldtype": "Select",
+      "label": "Meeting With",
+      "reqd": 1,
+      "in_list_view": 1,
+      "options": "Lead\nClient"
+    },
+    {
+      "fieldname": "lead",
+      "fieldtype": "Data",
+      "label": "Lead",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "If meeting_with = Lead"
+    },
+    {
+      "fieldname": "client",
+      "fieldtype": "Data",
+      "label": "Client",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "If meeting_with = Client"
+    },
+    {
+      "fieldname": "agent",
+      "fieldtype": "Data",
+      "label": "Agent",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "meeting_date",
+      "fieldtype": "Date",
+      "label": "Meeting Date",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "mode",
+      "fieldtype": "Select",
+      "label": "Mode",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Phone Call\nVideo Call\nIn-Person\nWhatsApp"
+    },
+    {
+      "fieldname": "sb_discussion",
+      "fieldtype": "Section Break",
+      "label": "Discussion"
+    },
+    {
+      "fieldname": "notes",
+      "fieldtype": "Text Editor",
+      "label": "Notes",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Discussion summary and key points"
+    },
+    {
+      "fieldname": "outcome",
+      "fieldtype": "Select",
+      "label": "Outcome",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Interested\nFollow-up Required\nNot Interested\nKYC Started\nOrder Placed"
+    },
+    {
+      "fieldname": "follow_up_date",
+      "fieldtype": "Date",
+      "label": "Follow-up Date",
+      "reqd": 0,
+      "in_list_view": 0
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "MEET-.YYYY.-.#####"
+}

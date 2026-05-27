@@ -1,0 +1,153 @@
+{
+  "name": "Distributor",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "company_name",
+      "fieldtype": "Data",
+      "label": "Company Name",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "Registered business name"
+    },
+    {
+      "fieldname": "arn_number",
+      "fieldtype": "Data",
+      "label": "ARN Number",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "AMFI Registration Number e.g. ARN-12345"
+    },
+    {
+      "fieldname": "sb_compliance",
+      "fieldtype": "Section Break",
+      "label": "Compliance"
+    },
+    {
+      "fieldname": "kyd_date",
+      "fieldtype": "Date",
+      "label": "KYD Date",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Know Your Distributor compliance date"
+    },
+    {
+      "fieldname": "kyd_status",
+      "fieldtype": "Select",
+      "label": "KYD Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Compliant\nNon-Compliant\nPending",
+      "default": "Pending"
+    },
+    {
+      "fieldname": "sebi_category",
+      "fieldtype": "Select",
+      "label": "SEBI Category",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Individual\nCorporate\nBank\nNRI"
+    },
+    {
+      "fieldname": "sb_tax_&_identity",
+      "fieldtype": "Section Break",
+      "label": "Tax & Identity"
+    },
+    {
+      "fieldname": "gstin",
+      "fieldtype": "Data",
+      "label": "GSTIN",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "pan",
+      "fieldtype": "Data",
+      "label": "PAN",
+      "reqd": 1,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_bank_details",
+      "fieldtype": "Section Break",
+      "label": "Bank Details"
+    },
+    {
+      "fieldname": "bank_name",
+      "fieldtype": "Data",
+      "label": "Bank Name",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Bank name for commission credits"
+    },
+    {
+      "fieldname": "account_number",
+      "fieldtype": "Password",
+      "label": "Account Number",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Bank account encrypted at rest"
+    },
+    {
+      "fieldname": "ifsc",
+      "fieldtype": "Data",
+      "label": "IFSC",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_contact",
+      "fieldtype": "Section Break",
+      "label": "Contact"
+    },
+    {
+      "fieldname": "contact_person",
+      "fieldtype": "Data",
+      "label": "Contact Person",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "mobile",
+      "fieldtype": "Data",
+      "label": "Mobile",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "is_active",
+      "fieldtype": "Check",
+      "label": "Is Active",
+      "reqd": 0,
+      "in_list_view": 0,
+      "default": "1"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "DIST-.YYYY.-.#####"
+}

@@ -1,0 +1,137 @@
+{
+  "name": "Risk Profile",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "client",
+      "fieldtype": "Data",
+      "label": "Client",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "agent",
+      "fieldtype": "Data",
+      "label": "Agent",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "assessment_date",
+      "fieldtype": "Date",
+      "label": "Assessment Date",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "valid_till",
+      "fieldtype": "Date",
+      "label": "Valid Till",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Validity usually 3 years"
+    },
+    {
+      "fieldname": "sb_result",
+      "fieldtype": "Section Break",
+      "label": "Result"
+    },
+    {
+      "fieldname": "risk_score",
+      "fieldtype": "Int",
+      "label": "Risk Score",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Aggregate score 0-100"
+    },
+    {
+      "fieldname": "risk_profile_type",
+      "fieldtype": "Select",
+      "label": "Risk Profile Type",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Conservative\nModerately Conservative\nModerate\nModerately Aggressive\nAggressive"
+    },
+    {
+      "fieldname": "sb_questionnaire_inputs",
+      "fieldtype": "Section Break",
+      "label": "Questionnaire Inputs"
+    },
+    {
+      "fieldname": "annual_income",
+      "fieldtype": "Select",
+      "label": "Annual Income",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Below 5L\n5-10L\n10-25L\n25-50L\n50L+"
+    },
+    {
+      "fieldname": "investment_horizon",
+      "fieldtype": "Select",
+      "label": "Investment Horizon",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Less than 1Y\n1-3Y\n3-5Y\n5Y+"
+    },
+    {
+      "fieldname": "q1_existing_investments",
+      "fieldtype": "Select",
+      "label": "Q1: Do you have existing investments?",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Yes, significant portfolio\nYes, small investments\nNo investments yet"
+    },
+    {
+      "fieldname": "q2_reaction_to_loss",
+      "fieldtype": "Select",
+      "label": "Q2: If portfolio dropped 20%, you would?",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Sell everything\nWait and watch\nBuy more"
+    },
+    {
+      "fieldname": "q3_primary_goal",
+      "fieldtype": "Select",
+      "label": "Q3: Primary investment goal?",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Capital protection\nRegular income\nWealth creation\nTax saving"
+    },
+    {
+      "fieldname": "q4_investment_experience",
+      "fieldtype": "Select",
+      "label": "Q4: Investment experience?",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Never invested\n1-3 years\n3-10 years\nOver 10 years"
+    },
+    {
+      "fieldname": "q5_liquidity_need",
+      "fieldtype": "Select",
+      "label": "Q5: Liquidity requirement?",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Within 1 year\n1-3 years\n3-7 years\nOver 7 years"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "RISK-.YYYY.-.#####"
+}

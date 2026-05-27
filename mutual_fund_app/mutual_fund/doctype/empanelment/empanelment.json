@@ -1,0 +1,80 @@
+{
+  "name": "Empanelment",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "distributor",
+      "fieldtype": "Data",
+      "label": "Distributor",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "Empanelled distributor"
+    },
+    {
+      "fieldname": "amc",
+      "fieldtype": "Data",
+      "label": "AMC",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "AMC with which empanelled"
+    },
+    {
+      "fieldname": "sb_agreement",
+      "fieldtype": "Section Break",
+      "label": "Agreement"
+    },
+    {
+      "fieldname": "agreement_date",
+      "fieldtype": "Date",
+      "label": "Agreement Date",
+      "reqd": 1,
+      "in_list_view": 0,
+      "description": "Date of IFA/distributor agreement"
+    },
+    {
+      "fieldname": "validity_date",
+      "fieldtype": "Date",
+      "label": "Validity Date",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Renewal/expiry date"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Active\nSuspended\nTerminated",
+      "default": "Active"
+    },
+    {
+      "fieldname": "agreement_file",
+      "fieldtype": "Attach",
+      "label": "Agreement File",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Signed agreement PDF"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "EMPL-.YYYY.-.#####"
+}

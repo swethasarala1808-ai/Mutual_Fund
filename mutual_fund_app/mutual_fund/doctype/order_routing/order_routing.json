@@ -1,0 +1,92 @@
+{
+  "name": "Order Routing",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "transaction_order",
+      "fieldtype": "Data",
+      "label": "Transaction Order",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "The original order being routed"
+    },
+    {
+      "fieldname": "routed_via",
+      "fieldtype": "Select",
+      "label": "Routed Via",
+      "reqd": 1,
+      "in_list_view": 1,
+      "options": "MFU\nBSE StAR MF\nDirect AMC"
+    },
+    {
+      "fieldname": "sb_submission",
+      "fieldtype": "Section Break",
+      "label": "Submission"
+    },
+    {
+      "fieldname": "submission_datetime",
+      "fieldtype": "Datetime",
+      "label": "Submission Time",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Timestamp of API submission"
+    },
+    {
+      "fieldname": "ack_number",
+      "fieldtype": "Data",
+      "label": "Ack Number",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Acknowledgement number from MFU/BSE"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Submitted\nConfirmed\nRejected\nPending",
+      "default": "Pending"
+    },
+    {
+      "fieldname": "sb_response",
+      "fieldtype": "Section Break",
+      "label": "Response"
+    },
+    {
+      "fieldname": "rejection_reason",
+      "fieldtype": "Text",
+      "label": "Rejection Reason",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "api_response",
+      "fieldtype": "Long Text",
+      "label": "API Response",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Raw API response JSON"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "ORDR-.YYYY.-.#####"
+}

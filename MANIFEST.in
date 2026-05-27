@@ -1,0 +1,1 @@
+recursive-include mutual_fund_app *.json *.js *.css *.html *.py

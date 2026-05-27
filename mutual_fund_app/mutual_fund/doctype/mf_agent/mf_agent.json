@@ -1,0 +1,126 @@
+{
+  "name": "MF Agent",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "agent_name",
+      "fieldtype": "Data",
+      "label": "Agent Name",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "euin",
+      "fieldtype": "Data",
+      "label": "EUIN",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "AMFI Employee Unique Identification Number"
+    },
+    {
+      "fieldname": "distributor",
+      "fieldtype": "Data",
+      "label": "Distributor",
+      "reqd": 1,
+      "in_list_view": 0,
+      "description": "Parent distributor company"
+    },
+    {
+      "fieldname": "reporting_manager",
+      "fieldtype": "Data",
+      "label": "Reporting Manager",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "RM/team lead"
+    },
+    {
+      "fieldname": "sb_contact",
+      "fieldtype": "Section Break",
+      "label": "Contact"
+    },
+    {
+      "fieldname": "mobile",
+      "fieldtype": "Data",
+      "label": "Mobile",
+      "reqd": 1,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "email",
+      "fieldtype": "Data",
+      "label": "Email",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_assignment",
+      "fieldtype": "Section Break",
+      "label": "Assignment"
+    },
+    {
+      "fieldname": "joining_date",
+      "fieldtype": "Date",
+      "label": "Joining Date",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "territory",
+      "fieldtype": "Data",
+      "label": "Territory",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "City/zone assigned"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Active\nInactive\nResigned",
+      "default": "Active"
+    },
+    {
+      "fieldname": "sb_targets",
+      "fieldtype": "Section Break",
+      "label": "Targets"
+    },
+    {
+      "fieldname": "aum_target",
+      "fieldtype": "Currency",
+      "label": "AUM Target",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Monthly AUM target INR"
+    },
+    {
+      "fieldname": "sip_count_target",
+      "fieldtype": "Int",
+      "label": "SIP Count Target",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Monthly new SIP target count"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "MFAG-.YYYY.-.#####"
+}

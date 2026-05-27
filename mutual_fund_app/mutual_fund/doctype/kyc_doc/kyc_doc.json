@@ -1,0 +1,147 @@
+{
+  "name": "KYC Doc",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "client",
+      "fieldtype": "Data",
+      "label": "Client",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "agent",
+      "fieldtype": "Data",
+      "label": "Agent",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Collecting agent"
+    },
+    {
+      "fieldname": "sb_identity_documents",
+      "fieldtype": "Section Break",
+      "label": "Identity Documents"
+    },
+    {
+      "fieldname": "pan_number",
+      "fieldtype": "Data",
+      "label": "PAN Number",
+      "reqd": 1,
+      "in_list_view": 0,
+      "description": "PAN validated format XXXXX1234X"
+    },
+    {
+      "fieldname": "pan_doc",
+      "fieldtype": "Attach",
+      "label": "PAN Document",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "aadhaar_last4",
+      "fieldtype": "Data",
+      "label": "Aadhaar Last 4",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Last 4 digits of Aadhaar (masked)"
+    },
+    {
+      "fieldname": "ekyc_reference",
+      "fieldtype": "Data",
+      "label": "eKYC Reference",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "NSDL eKYC transaction reference"
+    },
+    {
+      "fieldname": "sb_bank_&_photo",
+      "fieldtype": "Section Break",
+      "label": "Bank & Photo"
+    },
+    {
+      "fieldname": "bank_account_doc",
+      "fieldtype": "Attach",
+      "label": "Bank Account Proof",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Cancelled cheque or bank statement"
+    },
+    {
+      "fieldname": "photo",
+      "fieldtype": "Attach Image",
+      "label": "Passport Photo",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_fatca",
+      "fieldtype": "Section Break",
+      "label": "FATCA"
+    },
+    {
+      "fieldname": "fatca_us_person",
+      "fieldtype": "Check",
+      "label": "FATCA: US Person",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Is the client a US person?"
+    },
+    {
+      "fieldname": "fatca_country_tax",
+      "fieldtype": "Data",
+      "label": "FATCA Country of Tax",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Country of tax residence"
+    },
+    {
+      "fieldname": "sb_status",
+      "fieldtype": "Section Break",
+      "label": "Status"
+    },
+    {
+      "fieldname": "kyc_status",
+      "fieldtype": "Select",
+      "label": "KYC Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Pending\nSubmitted\nVerified\nRejected",
+      "default": "Pending"
+    },
+    {
+      "fieldname": "verified_date",
+      "fieldtype": "Date",
+      "label": "Verified Date",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "verified_by",
+      "fieldtype": "Data",
+      "label": "Verified By",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "KYC verifying authority"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "KYCD-.YYYY.-.#####"
+}

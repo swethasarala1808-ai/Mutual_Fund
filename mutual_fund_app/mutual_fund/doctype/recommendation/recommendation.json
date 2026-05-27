@@ -1,0 +1,170 @@
+{
+  "name": "Recommendation",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "client",
+      "fieldtype": "Data",
+      "label": "Client",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "agent",
+      "fieldtype": "Data",
+      "label": "Agent",
+      "reqd": 1,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "recommendation_date",
+      "fieldtype": "Date",
+      "label": "Date",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "risk_profile",
+      "fieldtype": "Data",
+      "label": "Risk Profile",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Associated risk profile used"
+    },
+    {
+      "fieldname": "investment_goal",
+      "fieldtype": "Data",
+      "label": "Investment Goal",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "e.g. Retirement, Child education, Wealth creation"
+    },
+    {
+      "fieldname": "total_sip_amount",
+      "fieldtype": "Currency",
+      "label": "Total SIP Amount",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Auto-sum of SIP amounts across schemes"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Draft\nSent to Client\nAccepted\nRejected",
+      "default": "Draft"
+    },
+    {
+      "fieldname": "client_signature",
+      "fieldtype": "Attach",
+      "label": "Client Signature",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Signed copy for compliance"
+    },
+    {
+      "fieldname": "sb_recommended_schemes",
+      "fieldtype": "Section Break",
+      "label": "Recommended Schemes"
+    },
+    {
+      "fieldname": "scheme_1",
+      "fieldtype": "Data",
+      "label": "Scheme 1",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_1_allocation",
+      "fieldtype": "Percent",
+      "label": "Scheme 1 Allocation %",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_1_sip",
+      "fieldtype": "Currency",
+      "label": "Scheme 1 SIP Amount",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_1_rationale",
+      "fieldtype": "Small Text",
+      "label": "Scheme 1 Rationale",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_2",
+      "fieldtype": "Data",
+      "label": "Scheme 2",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_2_allocation",
+      "fieldtype": "Percent",
+      "label": "Scheme 2 Allocation %",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_2_sip",
+      "fieldtype": "Currency",
+      "label": "Scheme 2 SIP Amount",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_2_rationale",
+      "fieldtype": "Small Text",
+      "label": "Scheme 2 Rationale",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_3",
+      "fieldtype": "Data",
+      "label": "Scheme 3",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_3_allocation",
+      "fieldtype": "Percent",
+      "label": "Scheme 3 Allocation %",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "scheme_3_sip",
+      "fieldtype": "Currency",
+      "label": "Scheme 3 SIP Amount",
+      "reqd": 0,
+      "in_list_view": 0
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "RECD-.YYYY.-.#####"
+}

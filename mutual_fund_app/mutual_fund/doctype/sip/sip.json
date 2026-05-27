@@ -1,0 +1,152 @@
+{
+  "name": "SIP",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 0,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "client",
+      "fieldtype": "Data",
+      "label": "Client",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "scheme",
+      "fieldtype": "Data",
+      "label": "Scheme",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "folio",
+      "fieldtype": "Data",
+      "label": "Folio",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Associated folio (set after first SIP confirms)"
+    },
+    {
+      "fieldname": "sb_sip_configuration",
+      "fieldtype": "Section Break",
+      "label": "SIP Configuration"
+    },
+    {
+      "fieldname": "sip_amount",
+      "fieldtype": "Currency",
+      "label": "SIP Amount",
+      "reqd": 1,
+      "in_list_view": 1,
+      "description": "Monthly instalment amount INR"
+    },
+    {
+      "fieldname": "frequency",
+      "fieldtype": "Select",
+      "label": "Frequency",
+      "reqd": 0,
+      "in_list_view": 0,
+      "options": "Monthly\nQuarterly\nWeekly",
+      "default": "Monthly"
+    },
+    {
+      "fieldname": "sip_date",
+      "fieldtype": "Int",
+      "label": "SIP Date",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Day of month for debit e.g. 5 = 5th of each month"
+    },
+    {
+      "fieldname": "start_date",
+      "fieldtype": "Date",
+      "label": "Start Date",
+      "reqd": 1,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "end_date",
+      "fieldtype": "Date",
+      "label": "End Date",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Blank = perpetual"
+    },
+    {
+      "fieldname": "installment_count",
+      "fieldtype": "Int",
+      "label": "Total Instalments",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_nach_mandate",
+      "fieldtype": "Section Break",
+      "label": "NACH Mandate"
+    },
+    {
+      "fieldname": "nach_mandate_number",
+      "fieldtype": "Data",
+      "label": "NACH Mandate Number",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "NPCI NACH mandate reference"
+    },
+    {
+      "fieldname": "mandate_status",
+      "fieldtype": "Select",
+      "label": "Mandate Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Pending\nRegistered\nFailed\nCancelled",
+      "default": "Pending"
+    },
+    {
+      "fieldname": "sb_tracking",
+      "fieldtype": "Section Break",
+      "label": "Tracking"
+    },
+    {
+      "fieldname": "next_sip_date",
+      "fieldtype": "Date",
+      "label": "Next SIP Date",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Auto-calculated next debit date"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "reqd": 0,
+      "in_list_view": 1,
+      "options": "Active\nPaused\nStopped\nExpired\nLapsed",
+      "default": "Active"
+    },
+    {
+      "fieldname": "total_invested",
+      "fieldtype": "Currency",
+      "label": "Total Invested",
+      "reqd": 0,
+      "in_list_view": 0,
+      "description": "Running total invested via this SIP"
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1,
+  "autoname": "SIP-.YYYY.-.#####"
+}

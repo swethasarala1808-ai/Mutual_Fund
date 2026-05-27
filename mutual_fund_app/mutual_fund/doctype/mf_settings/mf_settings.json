@@ -1,0 +1,153 @@
+{
+  "name": "MF Settings",
+  "module": "Mutual Fund",
+  "doctype": "DocType",
+  "issingle": 1,
+  "is_submittable": 0,
+  "allow_import": 1,
+  "fields": [
+    {
+      "fieldname": "company_name",
+      "fieldtype": "Data",
+      "label": "Company Name",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sebi_registration",
+      "fieldtype": "Data",
+      "label": "SEBI Registration",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "distributor_arn",
+      "fieldtype": "Data",
+      "label": "Distributor ARN",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_tax",
+      "fieldtype": "Section Break",
+      "label": "Tax"
+    },
+    {
+      "fieldname": "gstin",
+      "fieldtype": "Data",
+      "label": "GSTIN",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "pan",
+      "fieldtype": "Data",
+      "label": "PAN",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "tds_rate",
+      "fieldtype": "Percent",
+      "label": "TDS Rate %",
+      "reqd": 0,
+      "in_list_view": 0,
+      "default": "10"
+    },
+    {
+      "fieldname": "sb_operations",
+      "fieldtype": "Section Break",
+      "label": "Operations"
+    },
+    {
+      "fieldname": "ops_email",
+      "fieldtype": "Data",
+      "label": "Ops Email",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "ops_mobile",
+      "fieldtype": "Data",
+      "label": "Ops Mobile",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "whatsapp_number",
+      "fieldtype": "Data",
+      "label": "WhatsApp Number",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "nav_sync_time",
+      "fieldtype": "Data",
+      "label": "NAV Sync Time",
+      "reqd": 0,
+      "in_list_view": 0,
+      "default": "18:30"
+    },
+    {
+      "fieldname": "sip_reminder_days_before",
+      "fieldtype": "Int",
+      "label": "SIP Reminder Days Before",
+      "reqd": 0,
+      "in_list_view": 0,
+      "default": "3"
+    },
+    {
+      "fieldname": "sb_payment_gateway",
+      "fieldtype": "Section Break",
+      "label": "Payment Gateway"
+    },
+    {
+      "fieldname": "razorpay_key_id",
+      "fieldtype": "Data",
+      "label": "Razorpay Key ID",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "razorpay_key_secret",
+      "fieldtype": "Password",
+      "label": "Razorpay Key Secret",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "sb_branding",
+      "fieldtype": "Section Break",
+      "label": "Branding"
+    },
+    {
+      "fieldname": "website_url",
+      "fieldtype": "Data",
+      "label": "Website URL",
+      "reqd": 0,
+      "in_list_view": 0
+    },
+    {
+      "fieldname": "logo",
+      "fieldtype": "Attach Image",
+      "label": "Logo",
+      "reqd": 0,
+      "in_list_view": 0
+    }
+  ],
+  "permissions": [
+    {
+      "role": "All",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1,
+      "submit": 0,
+      "cancel": 0,
+      "amend": 0
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "track_changes": 1
+}
